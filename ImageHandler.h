@@ -17,13 +17,14 @@ public:
 	int errorRaise(int index);
 	int getWidth() const;
 	int getHeigth() const;
-	QImage &getProcessedImg();
+	QImage *getProcessedImg();
 
 private:
 	int width;
 	int heigth;
 	double rate;         //帧率
-	QImage currentImg;
+	QImage *currentImg;
+	cv::Mat frame;       //在此声明Mat的主要目的是防止在将Mat转换为QImage时，(const uchar *)指向的内存不被回收
 	cv::VideoCapture videoFlow;
 };
 

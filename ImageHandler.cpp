@@ -8,6 +8,7 @@ ImageHandler::ImageHandler(QString fileName)
 		this->rate = videoFlow.get(CV_CAP_PROP_FPS);
 		this->width = (int)videoFlow.get(CV_CAP_PROP_FRAME_WIDTH);
 		this->heigth = (int)videoFlow.get(CV_CAP_PROP_FRAME_HEIGHT);
+		currentImg = nullptr;
 	} else
 		errorRaise(-1);
 }
@@ -31,14 +32,15 @@ int ImageHandler::getHeigth() const
 	return heigth;
 }
 
-QImage &ImageHandler::getProcessedImg()
+QImage *ImageHandler::getProcessedImg()
 {
 	//读取帧
-	cv::Mat frame;
-	videoFlow >> frame;
-	//more to do
+	if (videoFlow.read(this->frame)) {
+////    more to do
 
-	//more to do
-	currentImg = QImage((const uchar *)frame.data, frame.cols, frame.rows, QImage::Format_RGB888);
-	return currentImg;
+////    more to do
+		currentImg = new QImage((const uchar *)frame.data, frame.cols, frame.rows, QImage::Format_RGB888);
+		return currentImg;
+	} else
+		return nullptr;
 }
