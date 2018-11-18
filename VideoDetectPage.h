@@ -6,6 +6,7 @@
 #include <QMediaPlayer>
 #include <QVideoWidget>
 #include <QPixmap>
+#include <QTimer>
 #include "ImageHandler.h"
 namespace Ui
 {
@@ -18,12 +19,16 @@ class VideoDetect : public QMainWindow
 
 public:
 	explicit VideoDetect(QWidget *parent = nullptr);
-	void refreshImg();
+	void playVideo();
+	void refreshImg(QImage *imgPtr);
 	~VideoDetect();
 
 private:
 	Ui::VideoDetect *ui;
 	ImageHandler imageHandler;
+	QTimer *timer;
+signals:
+
 };
 
 #endif // VIDEODETECTPAGE_H

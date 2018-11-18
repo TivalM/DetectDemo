@@ -44,3 +44,8 @@ QImage *ImageHandler::getProcessedImg()
 	} else
 		return nullptr;
 }
+
+double ImageHandler::getRate() const
+{
+	return rate;
+}

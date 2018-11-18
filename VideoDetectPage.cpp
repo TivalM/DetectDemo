@@ -7,22 +7,25 @@ VideoDetect::VideoDetect(QWidget *parent) :
 	imageHandler(QString::fromLocal8Bit("G:\\OBS捕获\\2018-08-30 12-26-11.mp4"))
 {
 	ui->setupUi(this);
-
-//	QImage *imgPtr = imageHandler.getProcessedImg();
-//	if (imgPtr) {
-//		ui->imgArea->setPixmap(QPixmap::fromImage(*imgPtr));
-//	}
-
+	this->timer = new QTimer(this);
 }
 
-void VideoDetect::refreshImg()
+void VideoDetect::playVideo()
 {
+	int offset = 1000 / (int)imageHandler.getRate();
 	QImage *imgPtr = imageHandler.getProcessedImg();
-	if (!imgPtr)
-		return;
+	connect(timer, SIGNAL(timeout()), this, SLOT(refreshImg(QImage * imgPtr)));
+	while (imgPtr) {
+		QImage *imgPtr = imageHandler.getProcessedImg();
+		timer->start(offset);
+	}
+}
+
+void VideoDetect::refreshImg(QImage *imgPtr)
+{
 	imgPtr->scaled(ui->imgArea->width(), ui->imgArea->height());
 	ui->imgArea->setPixmap(QPixmap::fromImage(*(imgPtr)));
-	cv::waitKey(0);
+	delete imgPtr;
 }
 
 VideoDetect::~VideoDetect()

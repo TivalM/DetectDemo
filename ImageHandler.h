@@ -17,6 +17,7 @@ public:
 	int errorRaise(int index);
 	int getWidth() const;
 	int getHeigth() const;
+	double getRate() const;
 	QImage *getProcessedImg();
 
 private:
